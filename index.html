@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Vicky ✨</title>
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* Degradado radial para simular un cielo nocturno profundo */
+            background: radial-gradient(circle at center, #1a0033 0%, #0d0d0d 100%);
+            overflow: hidden; 
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        /* --- Pantalla de inicio para activar música (Bloqueo de Autoplay) --- */
+        #pantalla-inicio {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 13, 13, 0.95); /* Fondo oscuro con ligera transparencia */
+            z-index: 1000; /* Aseguramos que esté por encima de todo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #texto-introduccion {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(179, 102, 255, 0.6);
+        }
+
+        #btn-iniciar {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            border-radius: 50px;
+            border: 2px solid #b366ff;
+            background: transparent;
+            color: #b366ff;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        #btn-iniciar:hover {
+            background: #b366ff;
+            color: white;
+            box-shadow: 0 0 30px #b366ff;
+            transform: scale(1.05);
+        }
+
+        /* --- Capas de Partículas --- */
+        #tsparticles-dust {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Polvo fino al fondo */
+        }
+
+        #tsparticles-flowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3; /* Flores cayendo sobre el polvo */
+        }
+
+        /* --- Elementos Principales (solo visibles al iniciar) --- */
+        .contenido-regalo {
+            display: none; /* Se oculta inicialmente */
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .texto-flotante {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #b366ff;
+            font-size: 3.5rem;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(179, 102, 255, 0.8), 0 0 20px rgba(179, 102, 255, 0.4);
+            z-index: 10;
+            animation: flotar 5s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translate(-50%, 0px) rotate(-1deg); }
+            50% { transform: translate(-50%, -25px) rotate(1deg); }
+        }
+
+        #contenedor-esfera {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .esfera {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            animation: rotarEsfera 25s linear infinite;
+        }
+
+        @keyframes rotarEsfera {
+            0% { transform: rotateY(0deg) rotateX(-5deg); }
+            100% { transform: rotateY(360deg) rotateX(-5deg); }
+        }
+
+        .foto-esfera {
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 3px solid #b366ff;
+            box-shadow: 0 0 20px rgba(179, 102, 255, 0.6);
+            transform: rotateY(calc(var(--i) * 60deg)) translateZ(350px);
+        }
+
+        @media (max-width: 768px) {
+            .texto-flotante { font-size: 0.7rem; top: 5%; }
+            #contenedor-esfera { width: 160px; height: 160px; }
+            .foto-esfera { 
+                width: 160px; 
+                height: 200px; 
+                transform: rotateY(calc(var(--i) * 60deg)) translateZ(220px); 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-inicio">
+        <div id="texto-introduccion">He preparado algo especial para ti, Victoria</div>
+        <button id="btn-iniciar">Toca aquí para abrirlo ✨</button>
+    </div>
+
+    <div id="regalo-vicky" class="contenido-regalo">
+        <div id="tsparticles-dust"></div>
+        
+        <div id="tsparticles-flowers"></div>
+
+        <audio id="musica-fondo" src="mai.mp3" loop preload="auto"></audio>
+
+        <div class="texto-flotante">
+            <h1>VICTORIA :D</h1>
+        </div>
+
+        <div id="contenedor-esfera">
+            <div class="esfera">
+                <img src="f1.jpg" class="foto-esfera" style="--i: 1;">
+                <img src="f2.jpg" class="foto-esfera" style="--i: 2;">
+                <img src="f3.jpg" class="foto-esfera" style="--i: 3;">
+                <img src="f4.jpg" class="foto-esfera" style="--i: 4;">
+                <img src="f5.jpg" class="foto-esfera" style="--i: 5;">
+                <img src="IMG-20260520-WA0026.jpeg" class="foto-esfera" style="--i: 6;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Referencias a elementos ---
+        const btnIniciar = document.getElementById('btn-iniciar');
+        const pantallaInicio = document.getElementById('pantalla-inicio');
+        const regaloVicky = document.getElementById('regalo-vicky');
+        const musica = document.getElementById('musica-fondo');
+
+        // --- Evento de clic en el botón de inicio ---
+        btnIniciar.addEventListener('click', () => {
+            // 1. Reproducir la música (esto lo permite el navegador tras el clic)
+            musica.play();
+            
+            // 2. Ocultar la pantalla de inicio y mostrar el regalo
+            pantallaInicio.style.display = 'none';
+            regaloVicky.style.display = 'block';
+
+            // 3. Inicializar tsParticles DESPUÉS de mostrar el contenedor
+            inicializarParticulas();
+        });
+
+        // --- Función para inicializar las dos capas de partículas ---
+        function inicializarParticulas() {
+            // CAPA 1: POLVO AROMÁTICO (Dust)
+            tsParticles.load("tsparticles-dust", {
+                particles: {
+                    number: { value: 150, density: { enable: true, area: 800 } },
+                    color: { value: ["#b366ff", "#ffffff"] },
+                    shape: { type: "circle" },
+                    opacity: { 
+                        value: { min: 0.1, max: 0.4 },
+                        random: true,
+                        animation: { enable: true, speed: 0.5, minimumValue: 0.1, sync: false }
+                    },
+                    size: { 
+                        value: { min: 1, max: 3 },
+                        random: true 
+                    },
+                    move: {
+                        enable: true,
+                        speed: 0.8,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        outModes: "out"
+                    }
+                }
+            });
+
+            // CAPA 2: CASACADA DE FLORES (Flowers)
+            tsParticles.load("tsparticles-flowers", {
+                particles: {
+                    number: { value: 15 },
+                    shape: {
+                        type: "image",
+                        options: {
+                            image: [
+                                // Asegúrate de que las rutas sean correctas
+                                { src: "bf.png", width: 100, height: 100 },
+                                { src: "bf1.png", width: 100, height: 100 }
+                            ]
+                        }
+                    },
+                    opacity: { value: { min: 0.4, max: 0.8 }, random: true },
+                    size: { 
+                        value: { min: 20, max: 40 },
+                        random: true 
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "bottom",
+                        straight: false,
+                        outModes: "out",
+                        wobble: {
+                            enable: true,
+                            distance: 10,
+                            speed: 5
+                        }
+                    },
+                    shadow: {
+                        enable: true,
+                        color: "#b366ff",
+                        blur: 10
+                    }
+                },
+                interactivity: {
+                    events: {
+                        onhover: { enable: true, mode: "repulse" }
+                    },
+                    modes: {
+                        repulse: { distance: 100, duration: 0.4 }
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
